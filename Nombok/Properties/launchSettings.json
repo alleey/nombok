@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Nombok": {
+      "commandName": "Project",
+      "commandLineArgs": "test.cs.txt",
+      "workingDirectory": "C:\\Users\\shoaib\\Documents\\Visual Studio 2019\\Nombok"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok", "Nombok\Nombok.csproj", "{B41A5D73-2500-4F1D-860D-C8E531591638}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Template", "Nombok.Template\Nombok.Template.csproj", "{191CF683-8773-41AE-AC9C-448ECDB02AAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Template.Razor", "Nombok.Template.Razor\Nombok.Template.Razor.csproj", "{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Core", "Nombok.Core\Nombok.Core.csproj", "{467F0635-A264-4D37-A07A-B34DDACDC8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Shared", "Nombok.Shared\Nombok.Shared.csproj", "{FB61BE6F-4E67-46D1-9361-28A804D31B40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Parser", "Nombok.Parser\Nombok.Parser.csproj", "{8A04DB78-4093-44C6-B540-03FC9D232B38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Parser.Roslyn", "Nombok.Parser.Roslyn\Nombok.Parser.Roslyn.csproj", "{2DE329B1-6804-4BCA-BA07-E9D31C83242D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B41A5D73-2500-4F1D-860D-C8E531591638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B41A5D73-2500-4F1D-860D-C8E531591638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B41A5D73-2500-4F1D-860D-C8E531591638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B41A5D73-2500-4F1D-860D-C8E531591638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191CF683-8773-41AE-AC9C-448ECDB02AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191CF683-8773-41AE-AC9C-448ECDB02AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191CF683-8773-41AE-AC9C-448ECDB02AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191CF683-8773-41AE-AC9C-448ECDB02AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{467F0635-A264-4D37-A07A-B34DDACDC8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{467F0635-A264-4D37-A07A-B34DDACDC8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{467F0635-A264-4D37-A07A-B34DDACDC8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{467F0635-A264-4D37-A07A-B34DDACDC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB61BE6F-4E67-46D1-9361-28A804D31B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB61BE6F-4E67-46D1-9361-28A804D31B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB61BE6F-4E67-46D1-9361-28A804D31B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB61BE6F-4E67-46D1-9361-28A804D31B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A04DB78-4093-44C6-B540-03FC9D232B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A04DB78-4093-44C6-B540-03FC9D232B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A04DB78-4093-44C6-B540-03FC9D232B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A04DB78-4093-44C6-B540-03FC9D232B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE329B1-6804-4BCA-BA07-E9D31C83242D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE329B1-6804-4BCA-BA07-E9D31C83242D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE329B1-6804-4BCA-BA07-E9D31C83242D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE329B1-6804-4BCA-BA07-E9D31C83242D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53EA4E23-0773-4C12-B11E-8920C5140612}
+	EndGlobalSection
+EndGlobal
