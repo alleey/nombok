@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Template", "Nombok.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Template.Razor", "Nombok.Template.Razor\Nombok.Template.Razor.csproj", "{2ABEA807-80FF-4DBB-94D0-76FD58146CB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Core", "Nombok.Core\Nombok.Core.csproj", "{467F0635-A264-4D37-A07A-B34DDACDC8F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Core", "Nombok.Core\Nombok.Core.csproj", "{467F0635-A264-4D37-A07A-B34DDACDC8F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Shared", "Nombok.Shared\Nombok.Shared.csproj", "{FB61BE6F-4E67-46D1-9361-28A804D31B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Shared", "Nombok.Shared\Nombok.Shared.csproj", "{FB61BE6F-4E67-46D1-9361-28A804D31B40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Parser", "Nombok.Parser\Nombok.Parser.csproj", "{8A04DB78-4093-44C6-B540-03FC9D232B38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Parser", "Nombok.Parser\Nombok.Parser.csproj", "{8A04DB78-4093-44C6-B540-03FC9D232B38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nombok.Parser.Roslyn", "Nombok.Parser.Roslyn\Nombok.Parser.Roslyn.csproj", "{2DE329B1-6804-4BCA-BA07-E9D31C83242D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nombok.Parser.Roslyn", "Nombok.Parser.Roslyn\Nombok.Parser.Roslyn.csproj", "{2DE329B1-6804-4BCA-BA07-E9D31C83242D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

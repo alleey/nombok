@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace MyApp
+{
+  public class PocoClass
+  {
+    public bool DisableEncoding { get; set; }
+    public string Name { get; set; }
+  }
+}
