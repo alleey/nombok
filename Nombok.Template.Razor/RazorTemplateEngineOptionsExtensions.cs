@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using Nombok.Template.Razor.Configuration;
 using Nombok.Template.Razor.Internal;
 using RazorLight;
 using RazorLight.Caching;
@@ -11,15 +12,9 @@ namespace Nombok.Template.Razor
 {
    public static class RazorTemplateEngineOptionsExtensions
    {
-      public static RazorTemplateEngineOptions DisableEncoding(this RazorTemplateEngineOptions options)
+      public static RazorTemplateEngineOptions UseEncoding(this RazorTemplateEngineOptions options, bool encoding)
       {
-         options.DisableEncoding = true;
-         return options;
-      }
-
-      public static RazorTemplateEngineOptions EnableEncoding(this RazorTemplateEngineOptions options)
-      {
-         options.DisableEncoding = false;
+         options.DisableEncoding = !encoding;
          return options;
       }
 
@@ -50,7 +45,7 @@ namespace Nombok.Template.Razor
          return options;
       }
 
-      public static RazorTemplateEngineOptions ExcludeAssemblies(this RazorTemplateEngineOptions options, params string[] assemblyNames)
+      public static RazorTemplateEngineOptions AddExcludedAssemblies(this RazorTemplateEngineOptions options, params string[] assemblyNames)
       {
          assemblyNames = assemblyNames ?? throw new ArgumentNullException(nameof(assemblyNames));
          foreach (var @assemblyName in assemblyNames)
@@ -87,6 +82,17 @@ namespace Nombok.Template.Razor
          return options;
       }
 
+      public static RazorTemplateEngineOptions AddOptionsFromConfig(this RazorTemplateEngineOptions options, RazorTemplateEngineConfig config)
+      {
+         config = config ?? throw new ArgumentNullException(nameof(config));
+         options = options ?? throw new ArgumentNullException(nameof(options));
+         options.AddDefaultNamespaces(config.Namespaces.ToArray());
+         options.AddExcludedAssemblies(config.ExcludedAssemblies.ToArray());
+         options.UseDynamicTemplates(config.DynamicTemplates);
+         options.UseEncoding(!config.DisableEncoding);
+         return options;
+      }
+
       internal static RazorLightEngine BuildEngine(this RazorTemplateEngineOptions options)
       {
          var builder = new RazorLightEngineBuilder()
@@ -96,7 +102,7 @@ namespace Nombok.Template.Razor
              .AddPrerenderCallbacks(options.PrerenderCallbacks.ToArray())
              .ExcludeAssemblies(options.ExcludedAssemblies.ToArray())
              .SetOperatingAssembly(options.OperatingAssembly)
-             .UseProject(new FileProviderRazorProject(options.BuildTemplateProvider()))
+             .UseProject(new FileProviderRazorProject(options.FileProvider))
              .UseCachingProvider(options.CachingProvider)
              ;
          if (options.DisableEncoding)

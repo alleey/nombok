@@ -5,25 +5,28 @@ namespace Nombok.Core
 {
    public static class GenerationContextOptionsExtensions
    {
-      public static GenerationContextOptions UseCodebaseProvider(this GenerationContextOptions options, IFileProvider provider)
-      {
-         options.CodebaseFileProvider = provider ?? throw new ArgumentNullException(nameof(provider));
-         return options;
-      }
+      // public static GenerationContextOptions AddTemplateFolders(this GenerationContextOptions options, params string[] folderList)
+      // {
+      //    options = options ?? throw new ArgumentNullException(nameof(options));
+      //    folderList = folderList ?? throw new ArgumentNullException(nameof(folderList));
+      //    foreach(var folder in folderList)
+      //          options.FileProviders.Add(new PhysicalFileProvider(folder));
+      //    return options;
+      // }
 
-      public static GenerationContextOptions UseCodebaseFolder(this GenerationContextOptions options, string root)
-      {
-         if (string.IsNullOrWhiteSpace(root))
-            throw new ArgumentException($"Bad value for the {nameof(root)} argument");
-         return options.UseCodebaseProvider(new PhysicalFileProvider(root));
-      }
+      // // public static GenerationContextOptions AddTemplateFoldersFromConfig(this GenerationContextOptions options, TemplateConfig config)
+      // // {
+      // //    config = config ?? throw new ArgumentNullException(nameof(config));
+      // //    return options.AddTemplateFolders(config.Locations.ToArray());
+      // // }
 
-      public static IFileProvider BuildCodebaseProvider(this GenerationContextOptions options)
-      {
-         options = options ?? throw new ArgumentNullException(nameof(options));
-         return options.CodebaseFileProvider;
-      }
+      // public static GenerationContextOptions AddTemplateProviders(this GenerationContextOptions options, IFileProvider provider)
+      // {
+      //    options = options ?? throw new ArgumentNullException(nameof(options));
+      //    provider = provider ?? throw new ArgumentNullException(nameof(provider));
+      //    options.FileProviders.Add(provider);
+      //    return options;
+      // }
    }
-
 }
 

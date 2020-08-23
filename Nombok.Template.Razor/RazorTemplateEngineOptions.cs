@@ -7,10 +7,9 @@ using System.Reflection;
 
 namespace Nombok.Template.Razor
 {
-   public class RazorTemplateEngineOptions : TemplateOptions
-   {
-      public const string OptionsName = "Razor";
 
+    public class RazorTemplateEngineOptions : TemplateOptions
+   {
       public Assembly OperatingAssembly { get; set; } = Assembly.GetEntryAssembly();
       public HashSet<string> Namespaces { get; } = new HashSet<string>();
       public IDictionary<string, string> DynamicTemplates { get; } = new Dictionary<string, string>();

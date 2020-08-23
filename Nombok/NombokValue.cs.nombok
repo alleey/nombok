@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Loader;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
+
+namespace Nombok
+{
+    [NombokValue]
+    partial class ATestClass
+    {
+        private readonly int age;
+        String name;
+        double score;
+        protected String[] tags;
+
+        public String Name {
+            private get { return name; }
+        }
+    }
+}
+

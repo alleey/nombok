@@ -1,11 +1,10 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
-using Nombok.CLI.nombok;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Nombok.CLI
+namespace Nombok.CLI.Nombok
 {
    [Command(Name = "nombok",
        UnrecognizedArgumentHandling = UnrecognizedArgumentHandling.CollectAndContinue,
