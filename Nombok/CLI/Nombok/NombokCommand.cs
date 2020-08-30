@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 
 namespace Nombok.CLI.Nombok
 {
-   [Command(Name = "nombok",
+   [Command(Name = "genn",
        UnrecognizedArgumentHandling = UnrecognizedArgumentHandling.CollectAndContinue,
        OptionsComparison = StringComparison.InvariantCultureIgnoreCase)]
    [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
    [Subcommand(typeof(GenerateNombokCommand))]
    class NombokCommand : NombokCommandBase
    {
-      public NombokCommand(ILogger<NombokCommand> logger, IConsole console) : base(logger, console)
+      public NombokCommand(ILogger<NombokCommand> logger) 
+         : base(logger)
       {
       }
 
-      protected override Task<int> OnExecuteAsync(CommandLineApplication app)
+      protected override Task<int> DpWorkAsync(CommandLineApplication app)
       {
+#if !DEBUG
          // this shows help even if the --help option isn't specified
-         //app.ShowHelp();
+         app.ShowHelp();
+#endif
          return Task.FromResult(0);
       }
 

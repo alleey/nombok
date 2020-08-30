@@ -4,10 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>Nombok.Program</StartupObject>
-    <AssemblyName>nombok</AssemblyName>
+    <AssemblyName>genn</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../Nombok.snk</AssemblyOriginatorKeyFile>
+    <Company>Shoaib Ali</Company>
+    <Product>Nombok Multipurpose Generator</Product>
+    <Authors>Shoaib Ali</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,6 +29,10 @@
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
     <PackageReference Include="McMaster.Extensions.Hosting.CommandLine" Version="3.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.7" />

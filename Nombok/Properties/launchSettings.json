@@ -2,7 +2,7 @@
   "profiles": {
     "Nombok": {
       "commandName": "Project",
-      "commandLineArgs": "generate test.cs.nombok"
+      "commandLineArgs": "generate *.nombok"
     }
   }
 }

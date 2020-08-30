@@ -10,6 +10,8 @@ namespace Nombok.Template.Razor
 {
    public class RazorTemplateEngine : IRazorTemplateEngine
    {
+      private const string DefaultExtension = "razor";
+
       private readonly ILogger _logger;
       private readonly RazorTemplateEngineOptions _options;
       private RazorLightEngine _engine;
@@ -40,6 +42,8 @@ namespace Nombok.Template.Razor
       }
 
       public RazorTemplateEngineOptions Options { get => _options; }
+
+      public string DefaultFileExtension => DefaultExtension;
 
       public async Task<string> RenderTemplateAsync<T>(string key, string content, T model, ExpandoObject viewBag = null)
       {

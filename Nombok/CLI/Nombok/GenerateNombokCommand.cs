@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using Nombok.Core.Codebase;
 
 namespace Nombok.CLI.Nombok
 {
@@ -22,47 +23,37 @@ namespace Nombok.CLI.Nombok
    class GenerateNombokCommand : NombokCommandBase
    {
       private readonly IFactory<GenerationContext, GenerationContextOptions> _contextFactory;
+      private readonly ICodebaseProvider _codeProvider;
       private readonly ITemplateEngine _templateEngine;
-      private readonly IFactory<IFileProvider, string> _fileProviderFactory;
 
       public GenerateNombokCommand(
-               IFactory<GenerationContext, GenerationContextOptions> contextFactory,
-               IFactory<IFileProvider, string> fileProviderFactory,
-               ITemplateEngine templateEngine,
-               ILogger<GenerateNombokCommand> logger,
-               IConsole console) : base(logger, console)
+         IFactory<GenerationContext, GenerationContextOptions> contextFactory,
+         ICodebaseProvider codeProvider,
+         ITemplateEngine templateEngine,
+         ILogger<GenerateNombokCommand> logger) : base(logger)
       {
          _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
          _templateEngine = templateEngine ?? throw new ArgumentNullException(nameof(templateEngine));
-         _fileProviderFactory = fileProviderFactory ?? throw new ArgumentNullException(nameof(fileProviderFactory));
+         _codeProvider = codeProvider ?? throw new ArgumentNullException(nameof(codeProvider));
       }
 
       [Option(CommandOptionType.SingleValue, ShortName = "f", LongName = "folder", Description = "Source directory")]
       public string InputFolder { get; } = Directory.GetCurrentDirectory();
 
-      protected override async Task<int> OnExecuteAsync(CommandLineApplication app)
+      protected override async Task<int> DpWorkAsync(CommandLineApplication app)
       {
          WriteHost($"Running in {InputFolder}");
-         var matcher = new Matcher(StringComparison.InvariantCultureIgnoreCase);
-         foreach (var i in app.RemainingArguments)
-            matcher.AddInclude(i);
 
-         var matched = matcher.Execute(new DirectoryInfoWrapper(new DirectoryInfo(InputFolder)));
-         if (!matched.HasMatches)
-         {
-            WriteHost($"No files found matching patterns");
-            return 0;
-         }
+         var searchCodeOptions = new CodebaseSearchOptions();
+         searchCodeOptions.AddIncludePatterns(app.RemainingArguments);
 
-         var fileProvider = _fileProviderFactory.Create(InputFolder);
-         foreach(var found in matched.Files)
-         {
-            var fileInfo = fileProvider.GetFileInfo(found.Path);
-
-            WriteHost($"Processing {fileInfo.PhysicalPath}");
-            var contextOptions = new GenerationContextOptions();
-            var context = _contextFactory.Create(contextOptions);
-         }
+         _codeProvider.Enumerate(InputFolder, searchCodeOptions,
+            (finfo) =>
+            {
+               WriteHost($"Processing {finfo.PhysicalPath}");
+               var contextOptions = new GenerationContextOptions();
+               var context = _contextFactory.Create(contextOptions);
+            });
 
          return 0;
       }

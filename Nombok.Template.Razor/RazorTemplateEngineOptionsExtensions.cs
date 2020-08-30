@@ -29,7 +29,7 @@ namespace Nombok.Template.Razor
          return options;
       }
 
-      public static RazorTemplateEngineOptions AddDefaultNamespaces(this RazorTemplateEngineOptions options, params string[] namespaces)
+      public static RazorTemplateEngineOptions AddDefaultNamespaces(this RazorTemplateEngineOptions options, IEnumerable<string> namespaces)
       {
          namespaces = namespaces ?? throw new ArgumentNullException(nameof(namespaces));
          foreach (var @namespace in namespaces)
@@ -45,7 +45,7 @@ namespace Nombok.Template.Razor
          return options;
       }
 
-      public static RazorTemplateEngineOptions AddExcludedAssemblies(this RazorTemplateEngineOptions options, params string[] assemblyNames)
+      public static RazorTemplateEngineOptions AddExcludedAssemblies(this RazorTemplateEngineOptions options, IEnumerable<string> assemblyNames)
       {
          assemblyNames = assemblyNames ?? throw new ArgumentNullException(nameof(assemblyNames));
          foreach (var @assemblyName in assemblyNames)
