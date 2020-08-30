@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Nombok": {
+    "gen": {
       "commandName": "Project",
       "commandLineArgs": "generate *.nombok"
     }

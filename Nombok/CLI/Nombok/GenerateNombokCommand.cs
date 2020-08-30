@@ -13,6 +13,8 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using Nombok.Core.Codebase;
+using Nombok.Shared.Codebase;
+using Nombok.Shared.FileSystem;
 
 namespace Nombok.CLI.Nombok
 {
@@ -40,20 +42,20 @@ namespace Nombok.CLI.Nombok
       [Option(CommandOptionType.SingleValue, ShortName = "f", LongName = "folder", Description = "Source directory")]
       public string InputFolder { get; } = Directory.GetCurrentDirectory();
 
-      protected override async Task<int> DpWorkAsync(CommandLineApplication app)
+      protected override async Task<int> DoWorkAsync(CommandLineApplication app)
       {
          WriteHost($"Running in {InputFolder}");
 
-         var searchCodeOptions = new CodebaseSearchOptions();
-         searchCodeOptions.AddIncludePatterns(app.RemainingArguments);
+         var searchCodeOptions = new FileSearchOptions()
+            .UseBaseFolder(InputFolder)
+            .AddIncludePatterns(app.RemainingArguments);
 
-         _codeProvider.Enumerate(InputFolder, searchCodeOptions,
-            (finfo) =>
-            {
-               WriteHost($"Processing {finfo.PhysicalPath}");
-               var contextOptions = new GenerationContextOptions();
-               var context = _contextFactory.Create(contextOptions);
-            });
+         foreach(var finfo in _codeProvider.Enumerate(searchCodeOptions))
+         {
+            WriteHost($"Processing {finfo.PhysicalPath}");
+            var contextOptions = new GenerationContextOptions();
+            var context = _contextFactory.Create(contextOptions);
+         }
 
          return 0;
       }

@@ -11,6 +11,8 @@
     <Company>Shoaib Ali</Company>
     <Product>Nombok Multipurpose Generator</Product>
     <Authors>Shoaib Ali</Authors>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -60,6 +62,12 @@
 
   <ItemGroup>
     <None Update="*.cs.nombok">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="templates">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

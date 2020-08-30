@@ -18,7 +18,7 @@ namespace Nombok.CLI.Nombok
       {
       }
 
-      protected override Task<int> DpWorkAsync(CommandLineApplication app)
+      protected override Task<int> DoWorkAsync(CommandLineApplication app)
       {
 #if !DEBUG
          // this shows help even if the --help option isn't specified

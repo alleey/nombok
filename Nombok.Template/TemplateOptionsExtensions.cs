@@ -13,6 +13,13 @@ namespace Nombok.Template
             options.FileProvider = provider ?? throw new ArgumentNullException(nameof(provider));
             return options;
         }
+
+        public static TemplateOptions UseTemplateFolders(this TemplateOptions options, IEnumerable<string> folders)
+        {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            options.FileProvider = new CompositeFileProvider(folders.Select(x => new PhysicalFileProvider(x)));
+            return options;
+        }
     }
 }
 

@@ -9,6 +9,8 @@ using Nombok.Core;
 using Nombok.Core.Codebase;
 using Nombok.Core.Factories;
 using Nombok.Shared;
+using Nombok.Shared.Codebase;
+using Nombok.Shared.FileSystem;
 using Nombok.Template;
 using Nombok.Template.Configuration;
 using Nombok.Template.Razor;
@@ -58,12 +60,15 @@ namespace Nombok
          {
             var configSection = $"Templates:{RazorTemplateEngineConfig.DefaultSectionName}";
             var config = hostContext.Configuration.GetSection(configSection).Get<RazorTemplateEngineConfig>();
-            options.AddOptionsFromConfig(config)
-                  .UseMemoryCachingProvider();
+
+            config.BaseLocation = config.BaseLocation ?? AppDomain.CurrentDomain.BaseDirectory;
+            options.AddOptionsFromConfig(config);
+            options.UseMemoryCachingProvider();
          });
 
          services.AddSingleton<IFactory<IFileProvider, string>, FileProviderFactory>();
          services.AddSingleton<IFactory<GenerationContext, GenerationContextOptions>, GenerationContextFactory>();
+         services.AddSingleton<IFileSystemProvider, DefaultFileSystemProvider>();
 
          services.AddTransient<RazorTemplateEngine>();
          services.AddTransient<ITemplateEngine>(x => x.GetRequiredService<RazorTemplateEngine>());

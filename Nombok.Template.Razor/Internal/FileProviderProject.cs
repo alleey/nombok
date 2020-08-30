@@ -8,49 +8,42 @@ using RazorLight.Razor;
 
 namespace Nombok.Template.Razor.Internal
 {
-  class FileProviderRazorProject : RazorLightProject
-  {
-    public const string DefaultExtension = FileSystemRazorProject.DefaultExtension;
-    private readonly IFileProvider _fileProvider;
+   class FileProviderRazorProject : RazorLightProject
+   {
+      private readonly IFileProvider _fileProvider;
 
-    public FileProviderRazorProject(IFileProvider fileProvider)
-        : this(fileProvider, DefaultExtension)
-    {
-    }
-
-    public FileProviderRazorProject(IFileProvider fileProvider, string extension)
-    {
-      Extension = extension ?? throw new ArgumentNullException(nameof(extension));
-      _fileProvider = fileProvider;
-    }
-
-    public virtual string Extension { get; set; }
-
-    /// <summary>
-    /// Looks up for the template source with a given <paramref name="templateKey" />
-    /// </summary>
-    /// <param name="templateKey">Unique template key</param>
-    /// <returns></returns>
-    public override Task<RazorLightProjectItem> GetItemAsync(string templateKey)
-    {
-      if (!templateKey.EndsWith(Extension))
+      public FileProviderRazorProject(IFileProvider fileProvider)
       {
-        templateKey = templateKey + Extension;
+         _fileProvider = fileProvider;
       }
 
-      var item = new FileSystemRazorProjectItem(templateKey, new FileInfo(templateKey));
-
-      if (item.Exists)
+      public override Task<RazorLightProjectItem> GetItemAsync(string templateKey)
       {
-        item.ExpirationToken = _fileProvider.Watch(templateKey);
+         var item = new FileInfotItem(templateKey, _fileProvider.GetFileInfo(templateKey));
+         if (item.Exists)
+         {
+               item.ExpirationToken = _fileProvider.Watch(templateKey);
+         }
+         return Task.FromResult<RazorLightProjectItem>(item);
       }
 
-      return Task.FromResult((RazorLightProjectItem)item);
-    }
+      public override Task<IEnumerable<RazorLightProjectItem>> GetImportsAsync(string templateKey)
+      {
+         return Task.FromResult(Enumerable.Empty<RazorLightProjectItem>());
+      }
 
-    public override Task<IEnumerable<RazorLightProjectItem>> GetImportsAsync(string templateKey)
-    {
-      return Task.FromResult(Enumerable.Empty<RazorLightProjectItem>());
-    }
-  }
+      class FileInfotItem : RazorLightProjectItem
+      {
+         public FileInfotItem(string templateKey, IFileInfo fileInfo)
+         {
+               Key = templateKey ?? throw new ArgumentNullException(nameof(templateKey));
+               File = fileInfo ?? throw new ArgumentNullException(nameof(fileInfo));
+         }
+
+         public IFileInfo File { get; }
+         public override string Key { get; }
+         public override bool Exists => File.Exists;
+         public override Stream Read() => File.CreateReadStream();
+      }
+   }
 }

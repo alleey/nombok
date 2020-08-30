@@ -6,7 +6,7 @@ namespace Nombok.Template
 {
    public interface ITemplateEngine : IDisposable
    {
-      public string DefaultFileExtension { get; }
       public Task<string> RenderTemplateAsync<T>(string key, string content, T model, ExpandoObject viewBag = null);
+      public Task<string> RenderTemplateFileAsync<T>(string filename, T model, ExpandoObject viewBag = null);
    }
 }

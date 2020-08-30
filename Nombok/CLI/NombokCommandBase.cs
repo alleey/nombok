@@ -21,11 +21,11 @@ namespace Nombok.CLI
       protected void WriteWarning(string message, params object[] args) => _logger.LogWarning(message, args);
       protected void WriteException(Exception ex) => _logger.LogError(ex.Message);
 
-      protected abstract Task<int> DpWorkAsync(CommandLineApplication app);
+      protected abstract Task<int> DoWorkAsync(CommandLineApplication app);
 
       protected Task<int> OnExecuteAsync(CommandLineApplication app)
       {
-         return DpWorkAsync(app);
+         return DoWorkAsync(app);
       }
    }
 }

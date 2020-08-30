@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Nombok.Template.Razor.Configuration;
-using Nombok.Template.Razor.Internal;
+using Nombok.Template.Configuration;
 using RazorLight;
 using RazorLight.Caching;
 using System;
@@ -10,10 +10,11 @@ using System.Reflection;
 
 namespace Nombok.Template.Razor
 {
-   public static class RazorTemplateEngineOptionsExtensions
+    public static class RazorTemplateEngineOptionsExtensions
    {
       public static RazorTemplateEngineOptions UseEncoding(this RazorTemplateEngineOptions options, bool encoding)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          options.DisableEncoding = !encoding;
          return options;
       }
@@ -25,12 +26,14 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions UseCachingProvider(this RazorTemplateEngineOptions options, ICachingProvider cachingProvider)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          options.CachingProvider = cachingProvider ?? throw new ArgumentNullException(nameof(cachingProvider));
          return options;
       }
 
       public static RazorTemplateEngineOptions AddDefaultNamespaces(this RazorTemplateEngineOptions options, IEnumerable<string> namespaces)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          namespaces = namespaces ?? throw new ArgumentNullException(nameof(namespaces));
          foreach (var @namespace in namespaces)
             options.Namespaces.Add(@namespace);
@@ -39,6 +42,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions AddMetadataReferences(this RazorTemplateEngineOptions options, params MetadataReference[] metadata)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          metadata = metadata ?? throw new ArgumentNullException(nameof(metadata));
          foreach (var @reference in metadata)
             options.MetadataReferences.Add(@reference);
@@ -47,6 +51,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions AddExcludedAssemblies(this RazorTemplateEngineOptions options, IEnumerable<string> assemblyNames)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          assemblyNames = assemblyNames ?? throw new ArgumentNullException(nameof(assemblyNames));
          foreach (var @assemblyName in assemblyNames)
             options.ExcludedAssemblies.Add(@assemblyName);
@@ -55,6 +60,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions AddPrerenderCallbacks(this RazorTemplateEngineOptions options, params Action<ITemplatePage>[] callbacks)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
          options.PrerenderCallbacks.AddRange(@callbacks);
          return options;
@@ -62,6 +68,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions UseDynamicTemplates(this RazorTemplateEngineOptions options, IDictionary<string, string> dynamicTemplates)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          dynamicTemplates = dynamicTemplates ?? throw new ArgumentNullException(nameof(dynamicTemplates));
          foreach (var entry in dynamicTemplates)
             options.DynamicTemplates[entry.Key] = entry.Value;
@@ -70,6 +77,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions AddDynamicTemplate(this RazorTemplateEngineOptions options, string name, string value)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          name = name ?? throw new ArgumentNullException(nameof(name));
          value = value ?? throw new ArgumentNullException(nameof(value));
          options.DynamicTemplates[name] = value;
@@ -78,6 +86,7 @@ namespace Nombok.Template.Razor
 
       public static RazorTemplateEngineOptions UseOperatingAssembly(this RazorTemplateEngineOptions options, Assembly assembly)
       {
+         options = options ?? throw new ArgumentNullException(nameof(options));
          options.OperatingAssembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
          return options;
       }
@@ -90,26 +99,8 @@ namespace Nombok.Template.Razor
          options.AddExcludedAssemblies(config.ExcludedAssemblies.ToArray());
          options.UseDynamicTemplates(config.DynamicTemplates);
          options.UseEncoding(!config.DisableEncoding);
+         options.UseTemplateFolders(config.GetTemplateFoldersAbsolute());
          return options;
-      }
-
-      internal static RazorLightEngine BuildEngine(this RazorTemplateEngineOptions options)
-      {
-         var builder = new RazorLightEngineBuilder()
-             .AddDefaultNamespaces(options.Namespaces.ToArray())
-             .AddDynamicTemplates(options.DynamicTemplates)
-             .AddMetadataReferences(options.MetadataReferences.ToArray())
-             .AddPrerenderCallbacks(options.PrerenderCallbacks.ToArray())
-             .ExcludeAssemblies(options.ExcludedAssemblies.ToArray())
-             .SetOperatingAssembly(options.OperatingAssembly)
-             .UseProject(new FileProviderRazorProject(options.FileProvider))
-             .UseCachingProvider(options.CachingProvider)
-             ;
-         if (options.DisableEncoding)
-            builder.DisableEncoding();
-         else
-            builder.EnableEncoding();
-         return builder.Build();
       }
    }
 }
