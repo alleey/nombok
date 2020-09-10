@@ -1,24 +1,26 @@
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 using Microsoft.Extensions.Logging;
 using Nombok.Shared;
 using Nombok.Shared.FileSystem;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Nombok.Core.Codebase
+namespace Nombok.Core.FileSystem
 {
     public class DefaultFileSystemProvider : IFileSystemProvider
     {
-        private readonly ILogger _logger;
+        private readonly IFactory<IFileProvider, string> _fileProviderFactory;
 
-        public DefaultFileSystemProvider(ILogger<DefaultFileSystemProvider> logger)
+        public DefaultFileSystemProvider(IFactory<IFileProvider, string> fileProviderFactory)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _fileProviderFactory = fileProviderFactory ?? throw new ArgumentNullException(nameof(fileProviderFactory));
         }
 
-        public IEnumerable<string> Enumerate(FileSearchOptions options)
+        public FileSearchResult Enumerate(FileSearchOptions options)
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
 
@@ -29,12 +31,14 @@ namespace Nombok.Core.Codebase
             var matched = matcher.Execute(GetDirectory(options.BaseFolder));
             if (!matched.HasMatches)
             {
-                _logger.LogInformation($"No files found matching patterns");
+                return new FileSearchResult();
             }
-            else foreach (var found in matched.Files)
-            {
-                yield return found.Path;
-            }
+
+            var fileProvider = _fileProviderFactory.Create(options.BaseFolder);
+            return new FileSearchResult(
+               matched.Files.Select(x => fileProvider.GetFileInfo(x.Path)),
+               matched.HasMatches
+            );
         }
 
         protected virtual DirectoryInfoBase GetDirectory(string path) 

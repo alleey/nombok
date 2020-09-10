@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace Nombok.Parser
 {
-    public interface ISourceParser : IDisposable
+    public interface ISourceParser<T> : IDisposable
     {
+        T ParseText(string source);
     }
 }
 

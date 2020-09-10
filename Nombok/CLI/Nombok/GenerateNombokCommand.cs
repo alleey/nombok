@@ -12,8 +12,6 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-using Nombok.Core.Codebase;
-using Nombok.Shared.Codebase;
 using Nombok.Shared.FileSystem;
 
 namespace Nombok.CLI.Nombok
@@ -25,18 +23,18 @@ namespace Nombok.CLI.Nombok
    class GenerateNombokCommand : NombokCommandBase
    {
       private readonly IFactory<GenerationContext, GenerationContextOptions> _contextFactory;
-      private readonly ICodebaseProvider _codeProvider;
+      private readonly IFileSystemProvider _fileSystem;
       private readonly ITemplateEngine _templateEngine;
 
       public GenerateNombokCommand(
          IFactory<GenerationContext, GenerationContextOptions> contextFactory,
-         ICodebaseProvider codeProvider,
+         IFileSystemProvider fileSystem,
          ITemplateEngine templateEngine,
          ILogger<GenerateNombokCommand> logger) : base(logger)
       {
          _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
          _templateEngine = templateEngine ?? throw new ArgumentNullException(nameof(templateEngine));
-         _codeProvider = codeProvider ?? throw new ArgumentNullException(nameof(codeProvider));
+         _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
       }
 
       [Option(CommandOptionType.SingleValue, ShortName = "f", LongName = "folder", Description = "Source directory")]
@@ -50,7 +48,14 @@ namespace Nombok.CLI.Nombok
             .UseBaseFolder(InputFolder)
             .AddIncludePatterns(app.RemainingArguments);
 
-         foreach(var finfo in _codeProvider.Enumerate(searchCodeOptions))
+         var result = _fileSystem.Enumerate(searchCodeOptions);
+         if (!result.HasMatches)
+         {
+            WriteHost($"No files found matching patterns");
+            return 0;
+         }
+
+         foreach(var finfo in result.Files)
          {
             WriteHost($"Processing {finfo.PhysicalPath}");
             var contextOptions = new GenerationContextOptions();

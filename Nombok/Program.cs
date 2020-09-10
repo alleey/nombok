@@ -3,25 +3,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Nombok.CLI;
 using Nombok.CLI.Nombok;
 using Nombok.Core;
-using Nombok.Core.Codebase;
 using Nombok.Core.Factories;
+using Nombok.Core.FileSystem;
 using Nombok.Shared;
 using Nombok.Shared.Codebase;
 using Nombok.Shared.FileSystem;
 using Nombok.Template;
-using Nombok.Template.Configuration;
 using Nombok.Template.Razor;
 using Nombok.Template.Razor.Configuration;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Nombok
 {
-   class Program
+    class Program
    {
       private static async Task<int> Main(string[] args)
       {
@@ -73,8 +70,6 @@ namespace Nombok
          services.AddTransient<RazorTemplateEngine>();
          services.AddTransient<ITemplateEngine>(x => x.GetRequiredService<RazorTemplateEngine>());
          services.AddTransient<IRazorTemplateEngine>(x => x.GetRequiredService<RazorTemplateEngine>());
-
-         services.AddTransient<ICodebaseProvider, DefaultCodebaseProvider>();
       }
 
       // public static SyntaxNode GenerateViewModel(SyntaxNode node)

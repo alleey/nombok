@@ -1,4 +1,6 @@
 using System;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,10 +10,12 @@ namespace Nombok.Parser.Roslyn
     public class RoslynCodeParser : IRoslynSourceParser
     {
         private bool _disposedValue;
-        private ILogger _logger;
+        private readonly ILogger _logger;
+        private readonly RoslynCodeParserOptions _options;
 
         public RoslynCodeParser(IOptions<RoslynCodeParserOptions> options, ILogger<RoslynCodeParser> logger)
         {
+            _options = (options ?? throw new ArgumentNullException(nameof(options))).Value;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -26,18 +30,20 @@ namespace Nombok.Parser.Roslyn
             }
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~RoslynCodeParser()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public SyntaxTree ParseText(string source)
+        {
+            var parserOptions = new CSharpParseOptions(
+                (LanguageVersion) _options.LanguageVersion,
+                DocumentationMode.None,
+                _options.IsScript ? SourceCodeKind.Script : SourceCodeKind.Regular
+            );
+            return CSharpSyntaxTree.ParseText(source, parserOptions);
         }
     }
 }
