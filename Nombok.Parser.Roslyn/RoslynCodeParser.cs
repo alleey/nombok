@@ -39,8 +39,8 @@ namespace Nombok.Parser.Roslyn
         public SyntaxTree ParseText(string source)
         {
             var parserOptions = new CSharpParseOptions(
-                (LanguageVersion) _options.LanguageVersion,
-                DocumentationMode.None,
+                _options.LanguageVersion,
+                _options.DocumentationMode,
                 _options.IsScript ? SourceCodeKind.Script : SourceCodeKind.Regular
             );
             return CSharpSyntaxTree.ParseText(source, parserOptions);

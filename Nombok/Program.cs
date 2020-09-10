@@ -8,7 +8,6 @@ using Nombok.Core;
 using Nombok.Core.Factories;
 using Nombok.Core.FileSystem;
 using Nombok.Shared;
-using Nombok.Shared.Codebase;
 using Nombok.Shared.FileSystem;
 using Nombok.Template;
 using Nombok.Template.Razor;
@@ -58,7 +57,7 @@ namespace Nombok
             var configSection = $"Templates:{RazorTemplateEngineConfig.DefaultSectionName}";
             var config = hostContext.Configuration.GetSection(configSection).Get<RazorTemplateEngineConfig>();
 
-            config.BaseLocation = config.BaseLocation ?? AppDomain.CurrentDomain.BaseDirectory;
+            config.BaseLocation ??= AppDomain.CurrentDomain.BaseDirectory;
             options.AddOptionsFromConfig(config);
             options.UseMemoryCachingProvider();
          });
